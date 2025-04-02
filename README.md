@@ -27,6 +27,7 @@ Este é um projeto de microserviços que implementa uma aplicação de gerenciam
 
 ## 📋 Estrutura do Projeto
 
+
 ```
 .
 ├── contexts/                 # Contextos de negócio
@@ -36,6 +37,8 @@ Este é um projeto de microserviços que implementa uma aplicação de gerenciam
 └── docs/                    # Documentação
 ```
 
+## 📚 Documentação
+
 ## 📊 Diagramas de Arquitetura
 
 ### Contexto do Sistema
@@ -44,10 +47,6 @@ Este é um projeto de microserviços que implementa uma aplicação de gerenciam
 ### Container
 ![Diagrama de Container](docs/diagram/c4-model/images/C4_Container.svg)
 
-## 📚 Documentação
-
-A documentação completa do projeto está disponível em:
-<a href="https://leandro0404.github.io/microservices-applications/docs/" target="_blank">https://leandro0404.github.io/microservices-applications/docs/</a>
 
 ## 🏗️ Arquitetura
 
