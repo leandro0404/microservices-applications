@@ -1,0 +1,43 @@
+name: generate plantuml
+
+on:
+  push:
+    branches-ignore:
+      - master
+      - develop
+      - staging
+      - dependabot/*
+  pull_request:
+    paths:
+      - 'docs/**/*.puml'
+      - 'docs/**/*.md'
+      - '.github/workflows/compile-diagrams.yml'
+
+jobs:
+  generate_plantuml:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    name: plantuml
+    steps:
+      - name: Install Dependencies
+        run: |
+          sudo apt-get install graphviz
+
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Process Diagrams
+        run: java -jar docs/diagram/c4-model/lib/plantuml.jar -v -tsvg -r -o "images" "docs/diagram/c4-model/**.puml"
+
+      - name: Display Diagrams
+        run: pwd && ls docs/diagram/c4-model
+
+      - name: Commit Diagrams
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git remote set-url origin https://github.com/${{ github.repository }}
+          git add .
+          git commit -m ":rocket: adding generated diagrams" || exit 0
+          git push 

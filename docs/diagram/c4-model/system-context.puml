@@ -1,0 +1,29 @@
+@startuml C4_SystemContext
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Context.puml
+
+LAYOUT_WITH_LEGEND()
+
+title System Context Diagram
+
+Person(user, "User", "A user of the system who needs to manage their profile and preferences")
+
+System_Boundary(microservices, "Microservices System") {
+    System(core, "Core Application", "Main application shell and shared services")
+    System(preference, "Preference Application", "User preferences management")
+    System(profile, "Profile Application", "User profile management")
+}
+
+System_Ext(oidc, "OIDC Provider", "Authentication and authorization service")
+System_Ext(aws, "AWS Services", "Cloud infrastructure and services")
+
+Rel(user, core, "Uses")
+Rel(user, preference, "Manages preferences")
+Rel(user, profile, "Manages profile")
+Rel(core, oidc, "Authenticates with")
+Rel(preference, oidc, "Authenticates with")
+Rel(profile, oidc, "Authenticates with")
+Rel(core, aws, "Uses")
+Rel(preference, aws, "Uses")
+Rel(profile, aws, "Uses")
+
+@enduml 

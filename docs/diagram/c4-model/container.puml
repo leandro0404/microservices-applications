@@ -1,0 +1,58 @@
+@startuml C4_Container
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+LAYOUT_WITH_LEGEND()
+
+title Container Diagram
+
+Person(user, "User", "A user of the system who needs to manage their profile and preferences")
+
+System_Boundary(microservices, "Microservices System") {
+    System_Boundary(core, "Core Context") {
+        Container(core_frontend, "Core Frontend", "React", "Main application shell and navigation")
+        Container(core_api, "Core API", "AWS Lambda", "Core services and authentication")
+        ContainerDb(core_db, "Core Database", "DynamoDB", "Core data storage")
+    }
+
+    System_Boundary(preference, "Preference Context") {
+        Container(pref_frontend, "Preference Frontend", "React", "User preferences management interface")
+        Container(pref_api, "Preference API", "AWS Lambda", "Preference management services")
+        ContainerDb(pref_db, "Preference Database", "DynamoDB", "Preference data storage")
+    }
+
+    System_Boundary(profile, "Profile Context") {
+        Container(profile_frontend, "Profile Frontend", "React", "User profile management interface")
+        Container(profile_api, "Profile API", "AWS Lambda", "Profile management services")
+        ContainerDb(profile_db, "Profile Database", "DynamoDB", "Profile data storage")
+    }
+}
+
+System_Ext(oidc, "OIDC Provider", "Authentication and authorization service")
+System_Ext(api_gateway, "API Gateway", "AWS API Gateway for routing and security")
+System_Ext(cloudfront, "CloudFront", "CDN for frontend hosting")
+
+Rel(user, core_frontend, "Uses")
+Rel(user, pref_frontend, "Uses")
+Rel(user, profile_frontend, "Uses")
+
+Rel(core_frontend, api_gateway, "API calls")
+Rel(pref_frontend, api_gateway, "API calls")
+Rel(profile_frontend, api_gateway, "API calls")
+
+Rel(api_gateway, core_api, "Routes to")
+Rel(api_gateway, pref_api, "Routes to")
+Rel(api_gateway, profile_api, "Routes to")
+
+Rel(core_api, core_db, "Reads/Writes")
+Rel(pref_api, pref_db, "Reads/Writes")
+Rel(profile_api, profile_db, "Reads/Writes")
+
+Rel(core_frontend, oidc, "Authenticates with")
+Rel(pref_frontend, oidc, "Authenticates with")
+Rel(profile_frontend, oidc, "Authenticates with")
+
+Rel(core_frontend, cloudfront, "Hosted on")
+Rel(pref_frontend, cloudfront, "Hosted on")
+Rel(profile_frontend, cloudfront, "Hosted on")
+
+@enduml 

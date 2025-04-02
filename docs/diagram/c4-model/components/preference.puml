@@ -1,0 +1,37 @@
+@startuml C4_PreferenceComponents
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+
+LAYOUT_WITH_LEGEND()
+
+title Preference Context Component Diagram
+
+Container_Boundary(pref_frontend, "Preference Frontend") {
+    Component(pref_list, "Preference List", "React", "Displays user preferences")
+    Component(pref_form, "Preference Form", "React", "Form for editing preferences")
+    Component(pref_sync, "Sync Component", "React", "Handles preference synchronization")
+    Component(shared, "Shared Components", "React", "Reusable UI components from core")
+}
+
+Container_Boundary(pref_api, "Preference API") {
+    Component(pref_service, "Preference Service", "AWS Lambda", "Manages preference operations")
+    Component(validation_service, "Validation Service", "AWS Lambda", "Validates preference data")
+    Component(sync_service, "Sync Service", "AWS Lambda", "Handles preference synchronization")
+}
+
+ContainerDb(pref_db, "Preference Database", "DynamoDB", "Preference data storage")
+
+System_Ext(api_gateway, "API Gateway", "API routing and security")
+System_Ext(core_api, "Core API", "Core services")
+
+Rel(pref_list, pref_form, "Uses")
+Rel(pref_form, pref_sync, "Uses")
+Rel(pref_list, shared, "Uses")
+Rel(pref_form, shared, "Uses")
+Rel(pref_sync, pref_service, "API calls")
+Rel(pref_service, validation_service, "Uses")
+Rel(pref_service, sync_service, "Uses")
+Rel(pref_service, pref_db, "Reads/Writes")
+Rel(pref_service, api_gateway, "Uses")
+Rel(pref_service, core_api, "Uses")
+
+@enduml 

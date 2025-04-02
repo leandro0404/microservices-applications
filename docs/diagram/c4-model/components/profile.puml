@@ -1,0 +1,41 @@
+@startuml C4_ProfileComponents
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+
+LAYOUT_WITH_LEGEND()
+
+title Profile Context Component Diagram
+
+Container_Boundary(profile_frontend, "Profile Frontend") {
+    Component(profile_list, "Profile List", "React", "Displays user profiles")
+    Component(profile_form, "Profile Form", "React", "Form for creating/editing profiles")
+    Component(profile_view, "Profile View", "React", "Detailed profile view")
+    Component(shared, "Shared Components", "React", "Reusable UI components from core")
+}
+
+Container_Boundary(profile_api, "Profile API") {
+    Component(profile_service, "Profile Service", "AWS Lambda", "Manages profile operations")
+    Component(search_service, "Search Service", "AWS Lambda", "Handles profile search")
+    Component(validation_service, "Validation Service", "AWS Lambda", "Validates profile data")
+}
+
+ContainerDb(profile_db, "Profile Database", "DynamoDB", "Profile data storage")
+
+System_Ext(api_gateway, "API Gateway", "API routing and security")
+System_Ext(core_api, "Core API", "Core services")
+
+Rel(profile_list, profile_form, "Uses")
+Rel(profile_list, profile_view, "Uses")
+Rel(profile_form, profile_view, "Uses")
+Rel(profile_list, shared, "Uses")
+Rel(profile_form, shared, "Uses")
+Rel(profile_view, shared, "Uses")
+Rel(profile_list, profile_service, "API calls")
+Rel(profile_form, profile_service, "API calls")
+Rel(profile_view, profile_service, "API calls")
+Rel(profile_service, search_service, "Uses")
+Rel(profile_service, validation_service, "Uses")
+Rel(profile_service, profile_db, "Reads/Writes")
+Rel(profile_service, api_gateway, "Uses")
+Rel(profile_service, core_api, "Uses")
+
+@enduml 

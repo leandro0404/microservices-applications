@@ -1,0 +1,43 @@
+@startuml C4_SystemContext
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Context.puml
+
+LAYOUT_WITH_LEGEND()
+
+title Diagrama de Contexto - Sistema de Microfrontends
+
+Person(user, "Usuário", "Usuário final do sistema que acessa as diferentes aplicações")
+
+System_Boundary(microfrontends, "Sistema de Microfrontends") {
+    System(app_root, "App Root", "Aplicação principal que gerencia contas")
+    System(app_preference, "App Preference", "Aplicação de gerenciamento de preferências")
+    System(app_profile, "App Profile", "Aplicação de gerenciamento de perfis")
+}
+
+System_Boundary(apis, "APIs do Sistema") {
+    System(api_account, "API Account", "API de gerenciamento de contas")
+    System(api_preference, "API Preference", "API de gerenciamento de preferências")
+    System(api_profile, "API Profile", "API de gerenciamento de perfis")
+}
+
+System_Ext(auth0, "Auth0", "Serviço de autenticação e autorização")
+System_Ext(aws, "AWS Services", "Serviços AWS (Lambda, API Gateway, DynamoDB)")
+
+Rel(user, app_root, "Acessa", "HTTPS")
+Rel(user, app_preference, "Acessa", "HTTPS")
+Rel(user, app_profile, "Acessa", "HTTPS")
+
+Rel(app_root, api_account, "Consome", "HTTPS/REST")
+Rel(app_preference, api_account, "Consome", "HTTPS/REST")
+Rel(app_preference, api_preference, "Consome", "HTTPS/REST")
+Rel(app_profile, api_account, "Consome", "HTTPS/REST")
+Rel(app_profile, api_profile, "Consome", "HTTPS/REST")
+
+Rel(api_account, auth0, "Autentica", "OAuth2")
+Rel(api_preference, auth0, "Autentica", "OAuth2")
+Rel(api_profile, auth0, "Autentica", "OAuth2")
+
+Rel(api_account, aws, "Utiliza", "AWS SDK")
+Rel(api_preference, aws, "Utiliza", "AWS SDK")
+Rel(api_profile, aws, "Utiliza", "AWS SDK")
+
+@enduml 

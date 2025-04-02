@@ -1,0 +1,14 @@
+{
+  "resource": "/account/{accountId}/profiles",
+  "path": "/account/2/profiles",
+  "httpMethod": "GET",
+  "headers": {
+    "accept": "application/json"
+  },
+  "queryStringParameters": null,
+  "pathParameters": {
+    "accountId": "2"
+  },
+  "body": null,
+  "isBase64Encoded": false
+}

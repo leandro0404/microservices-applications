@@ -1,0 +1,165 @@
+# Java
+*.class
+*.log
+*.ctxt
+.mtj.tmp/
+*.jar
+!docs/diagram/c4-model/lib/plantuml.jar
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar
+hs_err_pid*
+replay_pid*
+
+# Maven
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+.mvn/wrapper/maven-wrapper.jar
+.mvn/wrapper/
+src/*/back-end/*/.mvn/wrapper/
+
+# Gradle
+.gradle/
+build/
+gradle-app.setting
+!gradle-wrapper.jar
+.gradletasknamecache
+
+# IntelliJ IDEA
+.idea/
+*.iws
+*.iml
+*.ipr
+out/
+
+# Eclipse
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+bin/
+
+# VS Code
+.vscode/
+*.code-workspace
+
+# React
+node_modules/
+/frontend/build/
+.DS_Store
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# Arquivos de ambiente
+.env
+.env.*
+!.env.example
+
+# Arquivos de sistema
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Arquivos de cache
+.cache/
+.temp/
+.tmp/
+*.swp
+*.swo
+
+# Arquivos de log
+logs/
+*.log
+
+# Arquivos de backup
+*.bak
+*.backup
+*~
+
+# Arquivos de dependências
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Arquivos de build
+dist/
+build/
+out/
+target/
+target/
+
+# Microserviços - Estrutura específica
+src/*/back-end/target/
+src/*/back-end/.gradle/
+src/*/back-end/build/
+src/*/back-end/out/
+src/*/back-end/.idea/
+src/*/back-end/.vscode/
+src/*/back-end/*.iml
+src/*/back-end/.classpath
+src/*/back-end/.project
+src/*/back-end/.settings/
+
+# Frontend em cada contexto
+src/*/front-end/node_modules/
+src/*/front-end/build/
+src/*/front-end/dist/
+src/*/front-end/.next/
+src/*/front-end/.nuxt/
+src/*/front-end/.cache/
+src/*/front-end/.temp/
+src/*/front-end/.env*
+src/*/front-end/.DS_Store
+src/*/front-end/coverage/
+src/*/front-end/.nyc_output/
+
+# Arquivos de configuração com chaves sensíveis
+src/*/back-end/src/main/resources/application-*.properties
+src/*/back-end/src/main/resources/application-*.yml
+src/*/back-end/src/main/resources/application-*.yaml
+src/*/front-end/*/auth_config.json
+src/*/front-end/*/config.json
+src/*/front-end/*/secrets.json
+src/*/front-end/*/credentials.json
+
+# Permitir arquivos de exemplo
+!src/*/back-end/src/main/resources/application-*.properties.example
+!src/*/back-end/src/main/resources/application-*.yml.example
+!src/*/back-end/src/main/resources/application-*.yaml.example
+!src/*/front-end/*/auth_config.json.example
+!src/*/front-end/*/config.json.example
+
+# Arquivos de banco de dados local
+*.db
+*.sqlite
+*.sqlite3
+*.h2.db
+
+# Arquivos de teste
+src/*/back-end/test-output/
+src/*/back-end/test-results/
+src/*/front-end/coverage/
+src/*/front-end/.nyc_output/
+
+# Arquivos de deploy
+src/*/back-end/deploy/
+src/*/front-end/deploy/ 

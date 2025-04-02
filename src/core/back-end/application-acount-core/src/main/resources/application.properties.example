@@ -1,0 +1,21 @@
+# AWS Configuration
+quarkus.aws.dynamodb.access-key-id=${AWS_ACCESS_KEY_ID}
+quarkus.aws.dynamodb.secret-access-key=${AWS_SECRET_ACCESS_KEY}
+quarkus.aws.dynamodb.endpoint-override=${AWS_ENDPOINT_OVERRIDE}
+
+# CORS Configuration
+quarkus.http.cors=true
+quarkus.http.cors.origins=*
+quarkus.http.cors.methods=GET,POST,PUT,DELETE,OPTIONS
+quarkus.http.cors.headers=Authorization,Content-Type,Accept
+quarkus.http.cors.exposed-headers=Authorization,Content-Type
+
+# Auth0 Configuration
+quarkus.oidc.auth-server-url=${AUTH0_AUTH_SERVER_URL}
+quarkus.oidc.client-id=${AUTH0_CLIENT_ID}
+quarkus.oidc.credentials.secret=${AUTH0_CLIENT_SECRET}
+quarkus.oidc.token.issuer=${AUTH0_TOKEN_ISSUER}
+
+# Security Configuration
+quarkus.http.auth.permission.authenticated.paths=/account
+quarkus.http.auth.permission.authenticated.policy=authenticated 

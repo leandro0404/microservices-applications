@@ -1,0 +1,35 @@
+@startuml C4_CoreComponents
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+
+LAYOUT_WITH_LEGEND()
+
+title Core Context Component Diagram
+
+Container_Boundary(core_frontend, "Core Frontend") {
+    Component(router, "Router", "React Router", "Handles navigation and routing")
+    Component(auth, "Auth Component", "React", "Manages authentication state")
+    Component(layout, "Layout Component", "React", "Main application layout")
+    Component(shared, "Shared Components", "React", "Reusable UI components")
+}
+
+Container_Boundary(core_api, "Core API") {
+    Component(auth_service, "Auth Service", "AWS Lambda", "Handles authentication and authorization")
+    Component(user_service, "User Service", "AWS Lambda", "Manages user data and operations")
+    Component(shared_service, "Shared Service", "AWS Lambda", "Common utilities and functions")
+}
+
+ContainerDb(core_db, "Core Database", "DynamoDB", "Core data storage")
+
+System_Ext(oidc, "OIDC Provider", "Authentication service")
+System_Ext(api_gateway, "API Gateway", "API routing and security")
+
+Rel(router, auth, "Uses")
+Rel(router, layout, "Uses")
+Rel(layout, shared, "Uses")
+Rel(auth, auth_service, "API calls")
+Rel(auth_service, oidc, "Authenticates with")
+Rel(auth_service, api_gateway, "Uses")
+Rel(user_service, core_db, "Reads/Writes")
+Rel(shared_service, core_db, "Reads/Writes")
+
+@enduml 

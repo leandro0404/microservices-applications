@@ -1,0 +1,19 @@
+{
+  "resource": "/account",
+  "path": "/account",
+  "httpMethod": "GET",
+  "headers": {
+    "accept": "application/json",
+    "Authorization": "Bearer token"
+  },
+  "multiValueHeaders": {
+    "accept": ["application/json"],
+    "Authorization": ["Bearer token"]
+  },
+  "queryStringParameters": null,
+  "pathParameters": {
+    "accountId": "2"
+  },
+  "body": null,
+  "isBase64Encoded": false
+}
