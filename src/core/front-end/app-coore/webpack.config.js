@@ -1,12 +1,17 @@
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { ModuleFederationPlugin } = require("webpack").container;
 const ExternalTemplateRemotesPlugin = require("external-remotes-plugin");
+const webpack = require("webpack");
 const path = require("path");
-require("dotenv").config();
+const Dotenv = require('dotenv-webpack');
+
+// Carrega as variáveis de ambiente antes de qualquer configuração
+const env = process.env.NODE_ENV || 'development';
+require('dotenv').config({ path: `.env.${env}` });
 
 module.exports = {
   entry: "./src/index",
-  mode: "development", // Ou "production" quando for gerar o build
+  mode: env,
   devServer: {
     static: path.join(__dirname, "dist"),
     port: 3000,
@@ -27,6 +32,10 @@ module.exports = {
     ],
   },
   plugins: [
+    new Dotenv({
+      path: `.env.${env}`,
+      systemvars: true
+    }),
     new ModuleFederationPlugin({
       name: "root",
       remotes: {

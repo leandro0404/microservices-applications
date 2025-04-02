@@ -5,8 +5,9 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "webpack serve",
-    "build": "webpack --mode production"
+    "start": "NODE_ENV=development webpack serve",
+    "build": "NODE_ENV=production webpack --mode production",
+    "start:prod": "NODE_ENV=production webpack serve"
   },
   "dependencies": {
    "@auth0/auth0-react": "^2.3.0",
