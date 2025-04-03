@@ -14,8 +14,6 @@ import {
 } from '@mui/material'; 
 import { usePreferences } from '../hooks/usePreferences';
 import { LOCALE_OPTIONS, TIMEZONE_OPTIONS } from '../constants/preferences';
-import { Auth0Provider } from "@auth0/auth0-react";
-import { getConfig } from "../config";
 import { AccountProvider } from '../contexts/AccountContext';
 
 const PreferenceSelect = ({ label, value, options, onChange }) => (
@@ -132,23 +130,15 @@ const EditPreferencesContent = ({ onPreferenceUpdated }) => {
   );
 };
 
-// Wrapper component that provides Auth0 context when used as a federated module
+// Wrapper component that provides the AccountContext
 const EditPreferences = ({ token, ...props }) => {
-  const config = getConfig();
-  
+  // Se já existe um token global, use-o
+  const effectiveToken = token || window.appPreferenceToken;
+
   return (
-    <Auth0Provider
-      domain={config.domain}
-      clientId={config.clientId}
-      authorizationParams={{
-        redirect_uri: window.location.origin,
-        ...(config.audience ? { audience: config.audience } : null),
-      }}
-    >
-      <AccountProvider externalToken={token}>
-        <EditPreferencesContent {...props} />
-      </AccountProvider>
-    </Auth0Provider>
+    <AccountProvider externalToken={effectiveToken}>
+      <EditPreferencesContent {...props} />
+    </AccountProvider>
   );
 };
 
