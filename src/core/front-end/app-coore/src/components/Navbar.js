@@ -114,7 +114,7 @@ const Navbar = ({ organizationName }) => {
               overflow: 'hidden',
               minWidth: 'fit-content',
             }}>
-              <ProfileNavBar accountId={account.id} token={account.token} />
+              <ProfileNavBar/>
             </Box>
           </Box>
         </Toolbar>
