@@ -1,12 +1,18 @@
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { ModuleFederationPlugin } = require("webpack").container;
 const ExternalTemplateRemotesPlugin = require("external-remotes-plugin");
+const webpack = require("webpack");
 const path = require("path");
-require("dotenv").config();
+const Dotenv = require('dotenv-webpack');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+
+// Carrega as variáveis de ambiente antes de qualquer configuração
+const env = process.env.NODE_ENV || 'development';
+require('dotenv').config({ path: `.env.${env}` });
 
 module.exports = {
   entry: "./src/index",
-  mode: "development", // Ou "production" quando for gerar o build
+  mode: env,
   devServer: {
     static: path.join(__dirname, "dist"),
     port: 3000,
@@ -27,6 +33,10 @@ module.exports = {
     ],
   },
   plugins: [
+    new Dotenv({
+      path: `.env.${env}`,
+      systemvars: true
+    }),
     new ModuleFederationPlugin({
       name: "root",
       remotes: {
@@ -42,5 +52,32 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: "./public/index.html",
     }),
+    new BundleAnalyzerPlugin({
+      analyzerMode: 'static',
+      openAnalyzer: false,
+      reportFilename: 'bundle-report.html'
+    })
   ],
+  optimization: {
+    splitChunks: {
+      chunks: 'all',
+      minSize: 20000,
+      maxSize: 244000,
+      minChunks: 1,
+      maxAsyncRequests: 30,
+      maxInitialRequests: 30,
+      cacheGroups: {
+        defaultVendors: {
+          test: /[\\/]node_modules[\\/]/,
+          priority: -10,
+          reuseExistingChunk: true,
+        },
+        default: {
+          minChunks: 2,
+          priority: -20,
+          reuseExistingChunk: true,
+        },
+      },
+    },
+  },
 };
