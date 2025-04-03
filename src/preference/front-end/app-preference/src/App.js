@@ -6,7 +6,7 @@ import useAuthAndAccount from './hooks/useAuthAndAccount';
 import EditPreferences from './Components/EditPreferences';
 
 const App = () => {
-  const { isAuthenticated, loginWithRedirect, user, isLoading } = useAuth0();
+  const { isAuthenticated, loginWithRedirect,  isLoading } = useAuth0();
   const { account } = useAuthAndAccount();
 
   if (isLoading) {
