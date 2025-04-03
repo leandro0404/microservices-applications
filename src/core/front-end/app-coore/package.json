@@ -10,7 +10,7 @@
     "start:prod": "NODE_ENV=production webpack serve"
   },
   "dependencies": {
-   "@auth0/auth0-react": "^2.3.0",
+    "@auth0/auth0-react": "^2.3.0",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
     "@mui/icons-material": "^7.0.1",
@@ -30,6 +30,7 @@
     "external-remotes-plugin": "^1.0.0",
     "html-webpack-plugin": "^5.3.1",
     "webpack": "^5.38.1",
+    "webpack-bundle-analyzer": "^4.10.2",
     "webpack-cli": "^4.7.2",
     "webpack-dev-server": "^4.0.0"
   }

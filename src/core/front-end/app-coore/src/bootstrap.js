@@ -1,8 +1,8 @@
 import React from 'react'; 
-import { createRoot } from 'react-dom/client'; // Alterado para "react-dom/client"
+import { createRoot } from 'react-dom/client';
 import { Auth0Provider } from "@auth0/auth0-react";
 import App from "./App";
-import { AccountProvider } from './contexts/AccountContext'; // Importar o AccountProvider
+import { AccountProvider } from './contexts/AccountContext';
 import { getConfig } from "./config";
 import history from "./utils/history";
 
@@ -30,7 +30,7 @@ const providerConfig = {
 const root = createRoot(document.getElementById("root"));
 root.render(
   <Auth0Provider {...providerConfig}>
-    <AccountProvider> {/* 🔥 Envolvendo o App com o AccountProvider */}
+    <AccountProvider>
       <App />
     </AccountProvider>
   </Auth0Provider>

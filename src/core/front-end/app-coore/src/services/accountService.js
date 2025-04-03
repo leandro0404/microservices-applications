@@ -13,25 +13,35 @@ const API_URL = 'https://wfp9v2bl9e.execute-api.us-east-1.amazonaws.com/Prod/acc
  */
 const fetchAccountData = async (idToken) => {
   try {
-    // Fazendo a requisição para a API com o token de autenticação
+    console.log('accountService - Iniciando fetchAccountData');
+    console.log('accountService - Token recebido:', idToken ? 'Presente' : 'Ausente');
+    console.log('accountService - Token global:', window.appProfileToken ? 'Presente' : 'Ausente');
+
+    // Usa o token global se disponível, caso contrário usa o token passado
+    const token = window.appProfileToken || idToken;
+    
+    if (!token) {
+      console.error('accountService - Nenhum token disponível');
+      throw new Error('Token não disponível');
+    }
+
+    console.log('accountService - Fazendo requisição para API com token');
     const response = await axios.get(API_URL, {
       headers: {
-        Authorization: `Bearer ${idToken}`,
+        Authorization: `Bearer ${token}`,
       },
     });
 
-    // Retorna os dados da conta
+    console.log('accountService - Resposta da API:', response.data);
     return response.data;
   } catch (error) {
-    // Logando o erro
-    console.error('Erro ao buscar dados da conta:', error);
+    console.error('accountService - Erro ao buscar dados da conta:', error);
 
-    // Se a resposta for uma falha de autenticação (401), podemos lançar um erro específico
     if (error.response && error.response.status === 401) {
+      console.error('accountService - Erro de autenticação');
       throw new Error('Autenticação falhou. O token pode estar inválido.');
     }
 
-    // Caso contrário, lançar o erro genérico
     throw new Error('Erro ao buscar dados da conta');
   }
 };
