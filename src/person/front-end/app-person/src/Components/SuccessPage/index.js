@@ -55,134 +55,172 @@ const SuccessPage = () => {
 
   return (
     <Container maxWidth="md">
-      <Paper elevation={3} sx={{ p: 4, mt: 4, mb: 4 }}>
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
-          <Typography variant="h5" component="h1">
+      <Paper
+        elevation={3}
+        sx={{
+          p: 4,
+          mt: 4,
+          mb: 4,
+          background: '#fff',
+          borderRadius: 2,
+          position: 'relative'
+        }}
+      >
+        {/* Cabeçalho */}
+        <Box sx={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          mb: 4,
+          borderBottom: '2px solid #e0e0e0',
+          pb: 2
+        }}>
+          <Typography variant="h5" component="h1" sx={{ fontWeight: 'bold' }}>
             Cadastro Realizado com Sucesso
           </Typography>
           <StatusBadge status={personData.status} />
         </Box>
 
-        <Grid container spacing={3}>
+        {/* Conteúdo Principal */}
+        <Box sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          gap: 4,
+          '& > *': {
+            borderBottom: '1px solid #e0e0e0',
+            pb: 3
+          }
+        }}>
           {/* Dados Pessoais */}
-          <Grid item xs={12}>
-            <Typography variant="h6" gutterBottom>
+          <Box>
+            <Typography variant="h6" gutterBottom sx={{ color: 'primary.main', fontWeight: 'bold' }}>
               Dados Pessoais
             </Typography>
-            <Divider sx={{ mb: 2 }} />
-            <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
+            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, pl: 2 }}>
+              <Box>
                 <Typography variant="subtitle2" color="text.secondary">
                   {personData.type === 'INDIVIDUAL_ENTITY' ? 'Nome' : 'Razão Social'}
                 </Typography>
-                <Typography>{personData.type === 'INDIVIDUAL_ENTITY' ? personData.name : personData.companyName}</Typography>
-              </Grid>
+                <Typography variant="body1" sx={{ fontWeight: 500 }}>
+                  {personData.type === 'INDIVIDUAL_ENTITY' ? personData.name : personData.companyName}
+                </Typography>
+              </Box>
               {personData.type === 'INDIVIDUAL_ENTITY' && personData.birthDate && (
-                <Grid item xs={12} sm={6}>
+                <Box>
                   <Typography variant="subtitle2" color="text.secondary">
                     Data de Nascimento
                   </Typography>
-                  <Typography>{formatDate(personData.birthDate)}</Typography>
-                </Grid>
+                  <Typography variant="body1" sx={{ fontWeight: 500 }}>
+                    {formatDate(personData.birthDate)}
+                  </Typography>
+                </Box>
               )}
               {personData.type === 'INDIVIDUAL_ENTITY' && personData.isMEI !== undefined && (
-                <Grid item xs={12} sm={6}>
+                <Box>
                   <Typography variant="subtitle2" color="text.secondary">
                     MEI
                   </Typography>
-                  <Typography>{personData.isMEI ? 'Sim' : 'Não'}</Typography>
-                </Grid>
+                  <Typography variant="body1" sx={{ fontWeight: 500 }}>
+                    {personData.isMEI ? 'Sim' : 'Não'}
+                  </Typography>
+                </Box>
               )}
-            </Grid>
-          </Grid>
+            </Box>
+          </Box>
 
           {/* Documentos */}
           {personData.documents && personData.documents.length > 0 && (
-            <Grid item xs={12}>
-              <Typography variant="h6" gutterBottom>
+            <Box>
+              <Typography variant="h6" gutterBottom sx={{ color: 'primary.main', fontWeight: 'bold' }}>
                 Documentos
               </Typography>
-              <Divider sx={{ mb: 2 }} />
-              <Grid container spacing={2}>
+              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, pl: 2 }}>
                 {personData.documents.map((doc) => (
-                  <Grid item xs={12} sm={6} key={doc.id}>
+                  <Box key={doc.id}>
                     <Typography variant="subtitle2" color="text.secondary">
                       {doc.type}
                     </Typography>
-                    <Typography>{doc.value}</Typography>
-                  </Grid>
+                    <Typography variant="body1" sx={{ fontWeight: 500 }}>
+                      {doc.value}
+                    </Typography>
+                  </Box>
                 ))}
-              </Grid>
-            </Grid>
+              </Box>
+            </Box>
           )}
 
           {/* Endereço */}
           {personData.address && (
-            <Grid item xs={12}>
-              <Typography variant="h6" gutterBottom>
+            <Box>
+              <Typography variant="h6" gutterBottom sx={{ color: 'primary.main', fontWeight: 'bold' }}>
                 Endereço
               </Typography>
-              <Divider sx={{ mb: 2 }} />
-              <Grid container spacing={2}>
-                <Grid item xs={12}>
-                  <Typography>
-                    {personData.address.street}, {personData.address.number}
-                    {personData.address.complement && ` - ${personData.address.complement}`}
-                  </Typography>
-                  <Typography>
-                    {personData.address.neighborhood && `${personData.address.neighborhood}, `}
-                    {personData.address.city} - {personData.address.state}
-                  </Typography>
-                  <Typography>
-                    CEP: {personData.address.zipCode}
-                  </Typography>
-                </Grid>
-              </Grid>
-            </Grid>
+              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1, pl: 2 }}>
+                <Typography variant="body1" sx={{ fontWeight: 500 }}>
+                  {personData.address.street}, {personData.address.number}
+                  {personData.address.complement && ` - ${personData.address.complement}`}
+                </Typography>
+                <Typography variant="body1" sx={{ fontWeight: 500 }}>
+                  {personData.address.neighborhood && `${personData.address.neighborhood}, `}
+                  {personData.address.city} - {personData.address.state}
+                </Typography>
+                <Typography variant="body1" sx={{ fontWeight: 500 }}>
+                  CEP: {personData.address.zipCode}
+                </Typography>
+              </Box>
+            </Box>
           )}
 
           {/* Telefones */}
           {personData.phones && personData.phones.length > 0 && (
-            <Grid item xs={12}>
-              <Typography variant="h6" gutterBottom>
+            <Box>
+              <Typography variant="h6" gutterBottom sx={{ color: 'primary.main', fontWeight: 'bold' }}>
                 Telefones
               </Typography>
-              <Divider sx={{ mb: 2 }} />
-              <Grid container spacing={2}>
+              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, pl: 2 }}>
                 {personData.phones.map((phone) => (
-                  <Grid item xs={12} sm={6} key={phone.id}>
+                  <Box key={phone.id}>
                     <Typography variant="subtitle2" color="text.secondary">
                       {phone.type === 'CELL' ? 'Celular' : 'Telefone'}
                     </Typography>
-                    <Typography>{phone.value}</Typography>
-                  </Grid>
+                    <Typography variant="body1" sx={{ fontWeight: 500 }}>
+                      {phone.value}
+                    </Typography>
+                  </Box>
                 ))}
-              </Grid>
-            </Grid>
+              </Box>
+            </Box>
           )}
 
-          {/* Datas de Criação e Atualização */}
-          <Grid item xs={12}>
-            <Typography variant="h6" gutterBottom>
+          {/* Informações do Registro */}
+          <Box>
+            <Typography variant="h6" gutterBottom sx={{ color: 'primary.main', fontWeight: 'bold' }}>
               Informações do Registro
             </Typography>
-            <Divider sx={{ mb: 2 }} />
-            <Grid container spacing={2}>
+            <Grid container spacing={4} sx={{ pl: 2 }}>
               <Grid item xs={12} sm={6}>
-                <Typography variant="subtitle2" color="text.secondary">
-                  Data de Criação
-                </Typography>
-                <Typography>{new Date(personData.createdAt).toLocaleString('pt-BR')}</Typography>
+                <Box>
+                  <Typography variant="subtitle2" color="text.secondary">
+                    Data de Criação
+                  </Typography>
+                  <Typography variant="body1" sx={{ fontWeight: 500 }}>
+                    {new Date(personData.createdAt).toLocaleString('pt-BR')}
+                  </Typography>
+                </Box>
               </Grid>
               <Grid item xs={12} sm={6}>
-                <Typography variant="subtitle2" color="text.secondary">
-                  Última Atualização
-                </Typography>
-                <Typography>{new Date(personData.updatedAt).toLocaleString('pt-BR')}</Typography>
+                <Box>
+                  <Typography variant="subtitle2" color="text.secondary">
+                    Última Atualização
+                  </Typography>
+                  <Typography variant="body1" sx={{ fontWeight: 500 }}>
+                    {new Date(personData.updatedAt).toLocaleString('pt-BR')}
+                  </Typography>
+                </Box>
               </Grid>
             </Grid>
-          </Grid>
-        </Grid>
+          </Box>
+        </Box>
       </Paper>
     </Container>
   );

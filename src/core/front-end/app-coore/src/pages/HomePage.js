@@ -3,6 +3,7 @@ import { Box, Typography, Link, Paper, Chip, useTheme, useMediaQuery } from '@mu
 import StorageIcon from '@mui/icons-material/Storage';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import SettingsIcon from '@mui/icons-material/Settings';
+import PersonIcon from '@mui/icons-material/Person';
 
 const HomePage = () => {
   const theme = useTheme();
@@ -30,6 +31,13 @@ const HomePage = () => {
       hover: '#ed6c0210',
       text: '#ed6c02',
       icon: '#ed6c02'
+    },
+    person: {
+      bg: '#ffffff',
+      border: '#9c27b0',
+      hover: '#9c27b010',
+      text: '#9c27b0',
+      icon: '#9c27b0'
     }
   };
 
@@ -157,19 +165,19 @@ const HomePage = () => {
         overflow: 'hidden',
       }}
     >
-      <Box sx={{ 
-        display: 'flex', 
-        flexDirection: 'column', 
-        alignItems: 'center', 
-        gap: 3, 
-        maxWidth: 1200, 
+      <Box sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        gap: 3,
+        maxWidth: 1200,
         width: '100%',
         padding: { xs: 1, sm: 2 },
         margin: 0,
         boxSizing: 'border-box',
       }}>
         {/* Container dos Cards */}
-        <Box sx={{ 
+        <Box sx={{
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
@@ -203,10 +211,10 @@ const HomePage = () => {
               <Typography variant="body2" sx={{ color: '#6c757d', mb: 1, textAlign: 'center', fontSize: '0.75rem' }}>
                 Aplicação Principal
               </Typography>
-              <Link 
-                href="https://d13o1rfshhax5u.cloudfront.net/" 
-                target="_blank" 
-                sx={{ 
+              <Link
+                href="https://d13o1rfshhax5u.cloudfront.net/"
+                target="_blank"
+                sx={{
                   ...commonLinkStyle,
                   color: colors.root.border,
                   border: `1px solid ${colors.root.border}`,
@@ -221,9 +229,9 @@ const HomePage = () => {
           </Paper>
 
           {/* Base - App-Preference e App-Profile */}
-          <Box sx={{ 
-            display: 'flex', 
-            justifyContent: 'center', 
+          <Box sx={{
+            display: 'flex',
+            justifyContent: 'center',
             gap: 3,
             width: '100%',
             flexWrap: 'wrap',
@@ -256,10 +264,10 @@ const HomePage = () => {
                 <Typography variant="body2" sx={{ color: '#6c757d', mb: 1, textAlign: 'center', fontSize: '0.75rem' }}>
                   Gerenciamento de Preferências
                 </Typography>
-                <Link 
-                  href="https://dxhbpm58i19u8.cloudfront.net" 
-                  target="_blank" 
-                  sx={{ 
+                <Link
+                  href="https://dxhbpm58i19u8.cloudfront.net"
+                  target="_blank"
+                  sx={{
                     ...commonLinkStyle,
                     color: colors.preference.border,
                     border: `1px solid ${colors.preference.border}`,
@@ -302,10 +310,10 @@ const HomePage = () => {
                   Gerenciamento de Perfis
                 </Typography>
                 <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.5, width: '100%', alignItems: 'center' }}>
-                  <Link 
-                    href="https://d3nezuk5ua2jlf.cloudfront.net" 
-                    target="_blank" 
-                    sx={{ 
+                  <Link
+                    href="https://d3nezuk5ua2jlf.cloudfront.net"
+                    target="_blank"
+                    sx={{
                       ...commonLinkStyle,
                       color: colors.profile.border,
                       border: `1px solid ${colors.profile.border}`,
@@ -316,10 +324,10 @@ const HomePage = () => {
                   >
                     Profile Listagem
                   </Link>
-                  <Link 
-                    href="https://d3nezuk5ua2jlf.cloudfront.net/#/default" 
-                    target="_blank" 
-                    sx={{ 
+                  <Link
+                    href="https://d3nezuk5ua2jlf.cloudfront.net/#/default"
+                    target="_blank"
+                    sx={{
                       ...commonLinkStyle,
                       color: colors.profile.border,
                       border: `1px solid ${colors.profile.border}`,
@@ -330,10 +338,10 @@ const HomePage = () => {
                   >
                     Profile Default
                   </Link>
-                  <Link 
-                    href="https://d3nezuk5ua2jlf.cloudfront.net/#/create" 
-                    target="_blank" 
-                    sx={{ 
+                  <Link
+                    href="https://d3nezuk5ua2jlf.cloudfront.net/#/create"
+                    target="_blank"
+                    sx={{
                       ...commonLinkStyle,
                       color: colors.profile.border,
                       border: `1px solid ${colors.profile.border}`,
@@ -347,13 +355,74 @@ const HomePage = () => {
                 </Box>
               </Box>
             </Paper>
+
+            {/* App-Person */}
+            <Paper elevation={1} sx={{
+              ...commonCardStyle,
+              borderLeft: `4px solid ${colors.person.border}`,
+              '&:hover': {
+                backgroundColor: colors.person.hover,
+                transform: 'translateY(-5px)',
+              },
+            }}>
+              <Box sx={apiContainerStyle}>
+                <Chip
+                  icon={<AccountCircleIcon />}
+                  label="API Account"
+                  size="small"
+                  sx={apiChipStyle}
+                />
+                <Chip
+                  icon={<PersonIcon />}
+                  label="API Person"
+                  size="small"
+                  sx={apiChipStyle}
+                />
+              </Box>
+              <Box sx={cardContentStyle}>
+                <Typography variant="h6" sx={{ fontWeight: 500, color: '#495057', mb: 1, fontSize: '1rem' }}>App Person</Typography>
+                <Typography variant="body2" sx={{ color: '#6c757d', mb: 1, textAlign: 'center', fontSize: '0.75rem' }}>
+                  Gerenciamento de Pessoas
+                </Typography>
+                <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.5, width: '100%', alignItems: 'center' }}>
+                  <Link
+                    href="https://d14t2a2k6rq4on.cloudfront.net/"
+                    target="_blank"
+                    sx={{
+                      ...commonLinkStyle,
+                      color: colors.person.border,
+                      border: `1px solid ${colors.person.border}`,
+                      '&:hover': {
+                        backgroundColor: colors.person.hover,
+                      }
+                    }}
+                  >
+                    Cadastro
+                  </Link>
+                  <Link
+                    href="https://d14t2a2k6rq4on.cloudfront.net/#/success"
+                    target="_blank"
+                    sx={{
+                      ...commonLinkStyle,
+                      color: colors.person.border,
+                      border: `1px solid ${colors.person.border}`,
+                      '&:hover': {
+                        backgroundColor: colors.person.hover,
+                      }
+                    }}
+                  >
+                    Informações
+                  </Link>
+                </Box>
+              </Box>
+            </Paper>
           </Box>
         </Box>
 
         {/* Descrição principal */}
-        <Box sx={{ 
-          display: 'flex', 
-          gap: 3, 
+        <Box sx={{
+          display: 'flex',
+          gap: 3,
           width: '100%',
           maxWidth: '1200px',
           flexDirection: isMobile ? 'column' : 'row',
@@ -379,8 +448,8 @@ const HomePage = () => {
               <Typography variant="h5" sx={sectionTitleStyle}>
                 APIs do Sistema
               </Typography>
-              <Box sx={{ 
-                display: 'flex', 
+              <Box sx={{
+                display: 'flex',
                 flexDirection: 'column',
                 gap: 1.5,
               }}>
@@ -395,6 +464,10 @@ const HomePage = () => {
                 <Box sx={apiBoxStyle}>
                   <StorageIcon sx={{ color: colors.profile.icon }} />
                   <Typography variant="body2" sx={{ fontWeight: 500 }}>API Profile</Typography>
+                </Box>
+                <Box sx={apiBoxStyle}>
+                  <PersonIcon sx={{ color: colors.person.icon }} />
+                  <Typography variant="body2" sx={{ fontWeight: 500 }}>API Person</Typography>
                 </Box>
               </Box>
             </Paper>
