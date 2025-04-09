@@ -31,7 +31,7 @@ module.exports = {
       name: 'app_person',
       filename: 'remoteEntry.js',
       exposes: {
-         './PersonWizard': './src/Components/PersonWizard',
+        './PersonWizard': './src/Components/PersonWizard/index.js',
       },
       shared: { react: { singleton: true }, 'react-dom': { singleton: true } },
     }),
