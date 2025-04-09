@@ -9,7 +9,6 @@ import {
   CircularProgress,
   Alert
 } from '@mui/material';
-import { format } from 'date-fns';
 import StatusBadge from '../StatusBadge';
 import { usePerson } from '../../hooks/usePerson';
 
@@ -48,15 +47,10 @@ const SuccessPage = () => {
     );
   }
 
-  const formatDate = (dateString, includeTime = false) => {
-    try {
-      return format(
-        new Date(dateString),
-        includeTime ? 'dd/MM/yyyy HH:mm:ss' : 'dd/MM/yyyy'
-      );
-    } catch {
-      return dateString;
-    }
+  const formatDate = (dateString) => {
+    if (!dateString) return '';
+    const date = new Date(dateString);
+    return date.toLocaleDateString('pt-BR');
   };
 
   return (
@@ -178,13 +172,13 @@ const SuccessPage = () => {
                 <Typography variant="subtitle2" color="text.secondary">
                   Data de Criação
                 </Typography>
-                <Typography>{formatDate(personData.createdAt, true)}</Typography>
+                <Typography>{new Date(personData.createdAt).toLocaleString('pt-BR')}</Typography>
               </Grid>
               <Grid item xs={12} sm={6}>
                 <Typography variant="subtitle2" color="text.secondary">
                   Última Atualização
                 </Typography>
-                <Typography>{formatDate(personData.updatedAt, true)}</Typography>
+                <Typography>{new Date(personData.updatedAt).toLocaleString('pt-BR')}</Typography>
               </Grid>
             </Grid>
           </Grid>

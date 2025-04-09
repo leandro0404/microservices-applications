@@ -33,4 +33,4 @@ class PersonService {
   }
 }
 
-export const personService = new PersonService(); 
+export const personService = new PersonService();

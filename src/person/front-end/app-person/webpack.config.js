@@ -1,46 +1,43 @@
-const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const { ModuleFederationPlugin } = require('webpack').container;
+const path = require('path');
 const Dotenv = require('dotenv-webpack');
 
 module.exports = {
+  entry: './src/index',
   mode: 'development',
-  entry: './src/index.js',
+  devServer: {
+    static: path.join(__dirname, 'dist'),
+    port: 3003
+  },
   output: {
-    path: path.resolve(__dirname, 'dist'),
-    filename: '[name].js',
-    publicPath: '/'
+    publicPath: 'auto',
   },
   module: {
     rules: [
       {
-        test: /\.(js|jsx)$/,
+        test: /\.jsx?$/,
+        loader: 'babel-loader',
         exclude: /node_modules/,
-        use: {
-          loader: 'babel-loader'
-        }
+        options: {
+          presets: ['@babel/preset-react'],
+        },
       },
-      {
-        test: /\.css$/,
-        use: ['style-loader', 'css-loader']
-      }
-    ]
-  },
-  resolve: {
-    extensions: ['.js', '.jsx']
+    ],
   },
   plugins: [
+    // To learn more about the usage of this plugin, please visit https://webpack.js.org/plugins/module-federation-plugin/
+    new ModuleFederationPlugin({
+      name: 'app_person',
+      filename: 'remoteEntry.js',
+      exposes: {
+         './PersonWizard': './src/Components/PersonWizard',
+      },
+      shared: { react: { singleton: true }, 'react-dom': { singleton: true } },
+    }),
     new HtmlWebpackPlugin({
       template: './public/index.html',
-      title: 'App Person'
     }),
-    new Dotenv()
+    new Dotenv(),
   ],
-  devServer: {
-    static: {
-      directory: path.join(__dirname, 'dist'),
-    },
-    port: 3003,
-    hot: true,
-    historyApiFallback: true
-  }
 };

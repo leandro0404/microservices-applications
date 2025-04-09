@@ -48,26 +48,16 @@ const setCachedAccountData = (data) => {
   }
 };
 
-export const useAccount = () => {
-  const context = useContext(AccountContext);
-  if (!context) {
-    throw new Error('useAccount deve ser usado dentro de um AccountProvider');
-  }
-  return context;
-};
-
 export const AccountProvider = ({ children, externalToken }) => {
   const auth0 = useAuth0();
   const [account, setAccount] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
   const [previousToken, setPreviousToken] = useState(null);
 
   useEffect(() => {
     const fetchAccountData = async () => {
       try {
         setLoading(true);
-        setError(null);
         let idToken;
         
         console.log('AccountProvider - Iniciando fetchAccountData');
@@ -134,7 +124,6 @@ export const AccountProvider = ({ children, externalToken }) => {
         });
       } catch (error) {
         console.error('AccountProvider - Erro ao buscar dados da conta:', error);
-        setError(error.message);
       } finally {
         setLoading(false);
       }
@@ -142,34 +131,6 @@ export const AccountProvider = ({ children, externalToken }) => {
 
     fetchAccountData();
   }, [auth0.isAuthenticated, auth0.getIdTokenClaims, externalToken]);
-
-  const updateAccount = async (accountData) => {
-    try {
-      setLoading(true);
-      setError(null);
-
-      if (!externalToken) {
-        throw new Error('Token não disponível');
-      }
-
-      const updatedAccount = await accountService.updateAccount(externalToken, accountData);
-      setAccount(updatedAccount);
-      return updatedAccount;
-    } catch (error) {
-      console.error('Erro ao atualizar conta:', error);
-      setError(error.message);
-      throw error;
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const value = {
-    account,
-    loading,
-    error,
-    updateAccount
-  };
 
   // Se estiver carregando, retorna null ou um loading spinner
   if (loading) {
@@ -179,10 +140,16 @@ export const AccountProvider = ({ children, externalToken }) => {
 
   console.log('AccountProvider - Renderizando com account:', account ? 'Presente' : 'Ausente');
   return (
-    <AccountContext.Provider value={value}>
+    <AccountContext.Provider value={{ account, setAccount }}>
       {children}
     </AccountContext.Provider>
   );
 };
 
-export default AccountContext; 
+export const useAccount = () => {
+  const context = useContext(AccountContext);
+  if (!context) {
+    throw new Error("useAccount deve ser usado dentro de um AccountProvider");
+  }
+  return context;
+}; 

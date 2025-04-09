@@ -13,9 +13,6 @@ import {
 } from '@mui/material';
 import PersonIcon from '@mui/icons-material/Person';
 import BusinessIcon from '@mui/icons-material/Business';
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
-import { LocalizationProvider, DatePicker } from '@mui/x-date-pickers';
-import ptBR from 'date-fns/locale/pt-BR';
 import PersonType from '../../../constants/PersonType';
 
 const PersonTypeSelection = ({ onComplete, initialValue, readOnly = false }) => {
@@ -26,7 +23,7 @@ const PersonTypeSelection = ({ onComplete, initialValue, readOnly = false }) => 
       return {
         type: '',
         name: '',
-        birthDate: null,
+        birthDate: '',
         companyName: '',
         isMEI: false
       };
@@ -36,7 +33,7 @@ const PersonTypeSelection = ({ onComplete, initialValue, readOnly = false }) => 
     return {
       type: String(initialValue.type || ''),
       name: String(initialValue.name || ''),
-      birthDate: initialValue.birthDate ? new Date(initialValue.birthDate) : null,
+      birthDate: initialValue.birthDate ? initialValue.birthDate : '',
       companyName: String(initialValue.companyName || ''),
       isMEI: Boolean(initialValue.isMEI)
     };
@@ -65,7 +62,7 @@ const PersonTypeSelection = ({ onComplete, initialValue, readOnly = false }) => 
       setFormData({
         type: String(initialValue.type || ''),
         name: String(initialValue.name || ''),
-        birthDate: initialValue.birthDate ? new Date(initialValue.birthDate) : null,
+        birthDate: initialValue.birthDate ? initialValue.birthDate : '',
         companyName: String(initialValue.companyName || ''),
         isMEI: Boolean(initialValue.isMEI)
       });
@@ -78,14 +75,6 @@ const PersonTypeSelection = ({ onComplete, initialValue, readOnly = false }) => 
     setFormData(prev => ({
       ...prev,
       [field]: value
-    }));
-  };
-
-  const handleDateChange = (date) => {
-    if (readOnly) return;
-    setFormData(prev => ({
-      ...prev,
-      birthDate: date
     }));
   };
 
@@ -123,14 +112,12 @@ const PersonTypeSelection = ({ onComplete, initialValue, readOnly = false }) => 
                     />
                   </Grid>
                   <Grid item xs={12}>
-                    <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={ptBR}>
-                      <DatePicker
-                        label="Data de Nascimento"
-                        value={formData.birthDate}
-                        disabled
-                        renderInput={(params) => <TextField {...params} fullWidth />}
-                      />
-                    </LocalizationProvider>
+                    <TextField
+                      fullWidth
+                      label="Data de Nascimento"
+                      value={formData.birthDate}
+                      disabled
+                    />
                   </Grid>
                 </Grid>
               </Box>
@@ -206,15 +193,14 @@ const PersonTypeSelection = ({ onComplete, initialValue, readOnly = false }) => 
                     />
                   </Grid>
                   <Grid item xs={12}>
-                    <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={ptBR}>
-                      <DatePicker
-                        label="Data de Nascimento"
-                        value={formData.birthDate}
-                        onChange={handleDateChange}
-                        disabled={readOnly}
-                        renderInput={(params) => <TextField {...params} fullWidth />}
-                      />
-                    </LocalizationProvider>
+                    <TextField
+                      fullWidth
+                      label="Data de Nascimento"
+                      value={formData.birthDate}
+                      onChange={handleChange('birthDate')}
+                      disabled={readOnly}
+                      placeholder="DD/MM/AAAA"
+                    />
                   </Grid>
                 </Grid>
               </Box>

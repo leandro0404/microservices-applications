@@ -1,13 +1,13 @@
-import React, { Suspense } from 'react';
+import React, { Suspense } from "react";
 import { Box, CircularProgress, Typography } from '@mui/material';
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { useAuth0 } from "@auth0/auth0-react";
 import useAuthAndAccount from './hooks/useAuthAndAccount';
 import PersonWizard from './Components/PersonWizard';
 import SuccessPage from './Components/SuccessPage';
 
 const App = () => {
-  const { isAuthenticated, loginWithRedirect, user, isLoading } = useAuth0();
+  const { isAuthenticated, loginWithRedirect,  isLoading } = useAuth0();
   const { account } = useAuthAndAccount();
 
   if (isLoading) {
@@ -36,17 +36,27 @@ const App = () => {
   }
 
   return (
-    <Suspense fallback={<CircularProgress />}>
-      <Box sx={{ padding: 2 }}>
-        <Routes>
-          <Route path="/cadastro-pessoa" element={<PersonWizard />} />
-          <Route path="/success" element={<SuccessPage />} />
-          <Route path="/" element={<Navigate to="/cadastro-pessoa" replace />} />
-        </Routes>
-      </Box>
-    </Suspense>
+    <Router>
+      <Suspense fallback={<CircularProgress />}>
+        <Box sx={{ padding: 2 }}>
+          <Routes>
+
+             <Route
+                          path="/"
+                          element={
+                            <PersonWizard
+                              onComplete={() => {}}
+                            />
+                          }
+                        />
+                        <Route path="/success" element={<SuccessPage />} />
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
+        </Box>
+      </Suspense>
+    </Router>
   );
-};
+}
 
 export default App;
 

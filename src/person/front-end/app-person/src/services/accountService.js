@@ -37,35 +37,4 @@ const fetchAccountData = async (idToken) => {
   }
 };
 
-const accountService = {
-  fetchAccountData,
-  async getAccountInfo(idToken) {
-    try {
-      const response = await axios.get(`${API_URL}`, {
-        headers: {
-          Authorization: `Bearer ${idToken}`
-        }
-      });
-      return response.data;
-    } catch (error) {
-      console.error('Erro ao buscar informações da conta:', error);
-      throw error;
-    }
-  },
-
-  async updateAccount(idToken, accountData) {
-    try {
-      const response = await axios.put(`${API_URL}`, accountData, {
-        headers: {
-          Authorization: `Bearer ${idToken}`
-        }
-      });
-      return response.data;
-    } catch (error) {
-      console.error('Erro ao atualizar conta:', error);
-      throw error;
-    }
-  }
-};
-
-export default accountService; 
+export default { fetchAccountData }; 
