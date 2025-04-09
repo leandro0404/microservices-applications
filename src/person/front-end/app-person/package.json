@@ -18,8 +18,10 @@
     "dotenv": "^16.4.7",
     "history": "^5.3.0",
     "react": "^19.1.0",
+    "react-datepicker": "^8.3.0",
     "react-dom": "^19.1.0",
-    "react-router-dom": "^7.4.1"
+    "react-router-dom": "^7.4.1",
+    "styled-components": "^6.1.17"
   },
   "devDependencies": {
     "@babel/core": "^7.14.3",
