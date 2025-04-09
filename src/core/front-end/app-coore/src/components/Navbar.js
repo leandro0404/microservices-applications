@@ -95,6 +95,14 @@ const Navbar = ({ organizationName }) => {
             >
               Preferences
             </Button>
+            <Button 
+              color={location.pathname === '/person' ? 'primary' : 'inherit'}
+              variant={location.pathname === '/person' ? 'contained' : 'text'}
+              onClick={() => handleNavigation('/person')}
+              size="small"
+            >
+              Person
+            </Button>
           </Box>
           
           <Box sx={{ 

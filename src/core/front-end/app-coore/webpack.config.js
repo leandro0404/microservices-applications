@@ -42,6 +42,7 @@ module.exports = {
       remotes: {
         'app_profile': `app_profile@${process.env.APP_PROFILE_URL}/remoteEntry.js`,
         'app_preference': `app_preference@${process.env.APP_PREFERENCE_URL}/remoteEntry.js`,
+        'app_person': `app_person@${process.env.APP_PERSON_URL}/remoteEntry.js`,
       },
       shared: {
         react: { singleton: true, requiredVersion: "^19.1.0" },

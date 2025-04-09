@@ -15,6 +15,7 @@ const Sidebar = ({ open, toggleDrawer }) => {
     { text: 'Home', path: '/home' },
     { text: 'Profile', path: '/profile' },
     { text: 'Preferences', path: '/preferences' },
+    { text: 'Person', path: '/person' },
   ];
 
   const isHomeSelected = location.pathname === '/' || location.pathname === '/home';

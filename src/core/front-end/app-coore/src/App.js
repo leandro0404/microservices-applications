@@ -9,6 +9,7 @@ import { ThemeProvider } from '@mui/material/styles';
 import HomePage from "./pages/HomePage";
 import PreferencePage from "./pages/PreferencePage";
 import ProfilePage from "./pages/ProfilePage";
+import PersonPage from "./pages/PersonPage";
 import theme from './theme/index'
 
 const App = () => {
@@ -50,6 +51,7 @@ const App = () => {
               <Route path="/" element={<HomePage />} />
               <Route path="/preferences" element={<PreferencePage />} />
               <Route path="/profile" element={<ProfilePage />} />
+              <Route path="/person" element={<PersonPage />} />
               <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
           </Box>
