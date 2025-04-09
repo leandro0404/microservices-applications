@@ -1,0 +1,16 @@
+version = 0.1
+[default]
+stack_name = "application-person"
+region = "us-east-1"
+s3_prefix = "application-person"
+confirm_changeset = true
+capabilities = "CAPABILITY_IAM"
+image_repositories = []
+
+[default.deploy.parameters]
+stack_name = "application-person"
+resolve_s3 = true
+s3_prefix = "application-person"
+region = "us-east-1"
+capabilities = "CAPABILITY_IAM"
+image_repositories = []
