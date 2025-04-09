@@ -19,7 +19,7 @@ const ProfilePage = () => {
 
   return (
     <Box sx={{ padding: 2 }}>
-      <ListProfiles token={account.token} accountId={account.id} />
+      <ListProfiles/>
     </Box>
   );
 };
