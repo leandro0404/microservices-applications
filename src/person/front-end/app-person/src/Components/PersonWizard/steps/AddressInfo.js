@@ -64,7 +64,7 @@ const AddressInfo = ({ onComplete, initialValue, readOnly = false }) => {
       </Typography>
       
       <Grid container spacing={2}>
-        <Grid item xs={12}>
+        <Grid item xs={12} md={8}>
           <TextField
             fullWidth
             label="Logradouro"
@@ -74,7 +74,7 @@ const AddressInfo = ({ onComplete, initialValue, readOnly = false }) => {
             disabled={readOnly}
           />
         </Grid>
-        <Grid item xs={12} sm={6}>
+        <Grid item xs={12} md={4}>
           <TextField
             fullWidth
             label="Número"
@@ -84,16 +84,7 @@ const AddressInfo = ({ onComplete, initialValue, readOnly = false }) => {
             disabled={readOnly}
           />
         </Grid>
-        <Grid item xs={12} sm={6}>
-          <TextField
-            fullWidth
-            label="Complemento"
-            value={formData.complement}
-            onChange={handleChange('complement')}
-            disabled={readOnly}
-          />
-        </Grid>
-        <Grid item xs={12}>
+        <Grid item xs={12} md={6}>
           <TextField
             fullWidth
             label="Bairro"
@@ -103,7 +94,16 @@ const AddressInfo = ({ onComplete, initialValue, readOnly = false }) => {
             disabled={readOnly}
           />
         </Grid>
-        <Grid item xs={12} sm={8}>
+        <Grid item xs={12} md={6}>
+          <TextField
+            fullWidth
+            label="Complemento"
+            value={formData.complement}
+            onChange={handleChange('complement')}
+            disabled={readOnly}
+          />
+        </Grid>
+        <Grid item xs={12} md={6}>
           <TextField
             fullWidth
             label="Cidade"
@@ -113,7 +113,7 @@ const AddressInfo = ({ onComplete, initialValue, readOnly = false }) => {
             disabled={readOnly}
           />
         </Grid>
-        <Grid item xs={12} sm={4}>
+        <Grid item xs={12} md={2}>
           <TextField
             fullWidth
             label="Estado"
@@ -123,7 +123,7 @@ const AddressInfo = ({ onComplete, initialValue, readOnly = false }) => {
             disabled={readOnly}
           />
         </Grid>
-        <Grid item xs={12}>
+        <Grid item xs={12} md={4}>
           <TextField
             fullWidth
             label="CEP"

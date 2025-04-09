@@ -55,11 +55,11 @@ const SuccessPage = () => {
 
   return (
     <Container maxWidth="md">
-      <Paper
-        elevation={3}
-        sx={{
-          p: 4,
-          mt: 4,
+      <Paper 
+        elevation={3} 
+        sx={{ 
+          p: 4, 
+          mt: 4, 
           mb: 4,
           background: '#fff',
           borderRadius: 2,
@@ -67,10 +67,10 @@ const SuccessPage = () => {
         }}
       >
         {/* Cabeçalho */}
-        <Box sx={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
+        <Box sx={{ 
+          display: 'flex', 
+          justifyContent: 'space-between', 
+          alignItems: 'center', 
           mb: 4,
           borderBottom: '2px solid #e0e0e0',
           pb: 2
@@ -82,9 +82,9 @@ const SuccessPage = () => {
         </Box>
 
         {/* Conteúdo Principal */}
-        <Box sx={{
-          display: 'flex',
-          flexDirection: 'column',
+        <Box sx={{ 
+          display: 'flex', 
+          flexDirection: 'column', 
           gap: 4,
           '& > *': {
             borderBottom: '1px solid #e0e0e0',

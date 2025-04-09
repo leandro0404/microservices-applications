@@ -95,66 +95,97 @@ const PhoneInfo = ({ onComplete, initialValue, readOnly = false }) => {
       </Typography>
 
       {!readOnly && (
-        <Grid container spacing={2} sx={{ mb: 3 }}>
-          <Grid item xs={12} sm={8}>
-            <TextField
-              fullWidth
-              label="Novo Telefone"
-              value={newPhone}
-              onChange={handlePhoneChange}
-              onKeyPress={handleKeyPress}
-              helperText="Digite o telefone e pressione Enter para adicionar"
-            />
+        <Box sx={{ mb: 3 }}>
+          <Grid container spacing={2}>
+            <Grid item xs={12} md={4}>
+              <FormControl fullWidth>
+                <InputLabel>Tipo</InputLabel>
+                <Select
+                  value={newPhoneType}
+                  onChange={handlePhoneTypeChange}
+                  label="Tipo"
+                >
+                  <MenuItem value="CELL">Celular</MenuItem>
+                  <MenuItem value="PERSONAL">Pessoal</MenuItem>
+                </Select>
+              </FormControl>
+            </Grid>
+            <Grid item xs={12} md={8}>
+              <Box sx={{ 
+                display: 'flex',
+                gap: 1
+              }}>
+                <TextField
+                  fullWidth
+                  label="Novo Telefone"
+                  value={newPhone}
+                  onChange={handlePhoneChange}
+                  onKeyPress={handleKeyPress}
+                />
+                <IconButton
+                  onClick={handleAddPhone}
+                  disabled={!newPhone.trim()}
+                  sx={{ 
+                    height: 56,
+                    width: 56,
+                    bgcolor: 'primary.main',
+                    color: 'white',
+                    '&:hover': {
+                      bgcolor: 'primary.dark',
+                    },
+                    '&.Mui-disabled': {
+                      bgcolor: 'action.disabledBackground',
+                      color: 'action.disabled'
+                    }
+                  }}
+                >
+                  <AddIcon />
+                </IconButton>
+              </Box>
+            </Grid>
           </Grid>
-          <Grid item xs={12} sm={4}>
-            <FormControl fullWidth>
-              <InputLabel>Tipo</InputLabel>
-              <Select
-                value={newPhoneType}
-                onChange={handlePhoneTypeChange}
-                label="Tipo"
-              >
-                <MenuItem value="CELL">Celular</MenuItem>
-                <MenuItem value="PERSONAL">Pessoal</MenuItem>
-              </Select>
-            </FormControl>
-          </Grid>
-          <Grid item xs={12}>
-            <Button
-              variant="contained"
-              startIcon={<AddIcon />}
-              onClick={handleAddPhone}
-              disabled={!newPhone.trim()}
-            >
-              Adicionar Telefone
-            </Button>
-          </Grid>
-        </Grid>
+        </Box>
       )}
 
-      <List>
+      <Box sx={{ mt: 2 }}>
         {phones.map((phone, index) => (
-          <Paper key={index} sx={{ mb: 1 }}>
-            <ListItem>
-              <ListItemText 
-                primary={phone.value}
-                secondary={`Tipo: ${phone.type === 'CELL' ? 'Celular' : 'Pessoal'}`}
-              />
-              {!readOnly && (
-                <ListItemSecondaryAction>
-                  <IconButton 
-                    edge="end" 
-                    aria-label="delete"
-                    onClick={() => handleRemovePhone(index)}
-                  >
-                    <DeleteIcon />
-                  </IconButton>
-                </ListItemSecondaryAction>
-              )}
-            </ListItem>
+          <Paper 
+            key={phone.id} 
+            sx={{ 
+              p: 2,
+              mb: 1,
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              '&:hover': {
+                bgcolor: 'action.hover'
+              }
+            }}
+          >
+            <Box>
+              <Typography variant="subtitle1">
+                {phone.value}
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                {phone.type === 'CELL' ? 'Celular' : 'Pessoal'}
+              </Typography>
+            </Box>
+            {!readOnly && (
+              <IconButton 
+                onClick={() => handleRemovePhone(index)}
+                sx={{
+                  color: 'error.main',
+                  '&:hover': {
+                    color: 'error.dark'
+                  }
+                }}
+              >
+                <DeleteIcon />
+              </IconButton>
+            )}
           </Paper>
         ))}
-      </List>
+      </Box>
     </Box>
   );
 };

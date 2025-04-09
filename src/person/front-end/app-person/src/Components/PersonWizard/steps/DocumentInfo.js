@@ -141,67 +141,99 @@ const DocumentInfo = ({ onComplete, initialValue, readOnly = false }) => {
       </Typography>
 
       {!readOnly && (
-        <Grid container spacing={2} sx={{ mb: 3 }}>
-          <Grid item xs={12} sm={4}>
-            <FormControl fullWidth>
-              <InputLabel>Tipo de Documento</InputLabel>
-              <Select
-                value={newDocument.type}
-                onChange={handleChange('type')}
-                label="Tipo de Documento"
-              >
-                <MenuItem value={DocumentType.CPF}>CPF</MenuItem>
-                <MenuItem value={DocumentType.CNPJ}>CNPJ</MenuItem>
-                <MenuItem value={DocumentType.RG}>RG</MenuItem>
-                <MenuItem value={DocumentType.DOCUMENT}>Documento</MenuItem>
-              </Select>
-            </FormControl>
+        <Box sx={{ mb: 3 }}>
+          <Grid container spacing={2}>
+            <Grid item xs={12} md={4}>
+              <FormControl fullWidth>
+                <InputLabel>Tipo de Documento</InputLabel>
+                <Select
+                  value={newDocument.type}
+                  onChange={handleChange('type')}
+                  label="Tipo de Documento"
+                >
+                  <MenuItem value={DocumentType.CPF}>CPF</MenuItem>
+                  <MenuItem value={DocumentType.CNPJ}>CNPJ</MenuItem>
+                  <MenuItem value={DocumentType.RG}>RG</MenuItem>
+                  <MenuItem value={DocumentType.DOCUMENT}>Documento</MenuItem>
+                </Select>
+              </FormControl>
+            </Grid>
+            <Grid item xs={12} md={8}>
+              <Box sx={{ 
+                display: 'flex',
+                gap: 1
+              }}>
+                <TextField
+                  fullWidth
+                  label={getDocumentLabel(newDocument.type)}
+                  value={newDocument.value}
+                  onChange={handleDocumentChange}
+                  required
+                />
+                <IconButton
+                  onClick={handleAddDocument}
+                  disabled={!newDocument.value}
+                  sx={{ 
+                    height: 56,
+                    width: 56,
+                    bgcolor: 'primary.main',
+                    color: 'white',
+                    '&:hover': {
+                      bgcolor: 'primary.dark',
+                    },
+                    '&.Mui-disabled': {
+                      bgcolor: 'action.disabledBackground',
+                      color: 'action.disabled'
+                    }
+                  }}
+                >
+                  <AddIcon />
+                </IconButton>
+              </Box>
+            </Grid>
           </Grid>
-          <Grid item xs={12} sm={8}>
-            <TextField
-              fullWidth
-              label={getDocumentLabel(newDocument.type)}
-              value={newDocument.value}
-              onChange={handleDocumentChange}
-              required
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <Button
-              variant="contained"
-              startIcon={<AddIcon />}
-              onClick={handleAddDocument}
-              disabled={!newDocument.value}
-            >
-              Adicionar Documento
-            </Button>
-          </Grid>
-        </Grid>
+        </Box>
       )}
 
-      <List>
+      <Box sx={{ mt: 2 }}>
         {documents.map((doc, index) => (
-          <Paper key={doc.id} sx={{ mb: 1 }}>
-            <ListItem>
-              <ListItemText
-                primary={formatDocument(doc.type, doc.value)}
-                secondary={`Tipo: ${getDocumentLabel(doc.type)}`}
-              />
-              {!readOnly && (
-                <ListItemSecondaryAction>
-                  <IconButton 
-                    edge="end" 
-                    aria-label="delete"
-                    onClick={() => handleRemoveDocument(index)}
-                  >
-                    <DeleteIcon />
-                  </IconButton>
-                </ListItemSecondaryAction>
-              )}
-            </ListItem>
+          <Paper 
+            key={doc.id} 
+            sx={{ 
+              p: 2,
+              mb: 1,
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              '&:hover': {
+                bgcolor: 'action.hover'
+              }
+            }}
+          >
+            <Box>
+              <Typography variant="subtitle1">
+                {formatDocument(doc.type, doc.value)}
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                {getDocumentLabel(doc.type)}
+              </Typography>
+            </Box>
+            {!readOnly && (
+              <IconButton 
+                onClick={() => handleRemoveDocument(index)}
+                sx={{
+                  color: 'error.main',
+                  '&:hover': {
+                    color: 'error.dark'
+                  }
+                }}
+              >
+                <DeleteIcon />
+              </IconButton>
+            )}
           </Paper>
         ))}
-      </List>
+      </Box>
     </Box>
   );
 };
