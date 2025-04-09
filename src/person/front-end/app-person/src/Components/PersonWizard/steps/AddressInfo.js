@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { 
   Box, 
   TextField, 
@@ -34,6 +34,9 @@ const AddressInfo = ({ onComplete, initialValue, readOnly = false }) => {
     };
   });
 
+  // Usar useRef para armazenar o valor anterior do formData
+  const prevFormDataRef = useRef(formData);
+
   useEffect(() => {
     // Validação básica - você pode adicionar mais regras conforme necessário
     const isValid = formData.street && 
@@ -43,7 +46,15 @@ const AddressInfo = ({ onComplete, initialValue, readOnly = false }) => {
                    formData.state && 
                    formData.zipCode;
     
-    if (isValid) {
+    // Verificar se o formData realmente mudou
+    const prevFormDataStr = JSON.stringify(prevFormDataRef.current);
+    const currentFormDataStr = JSON.stringify(formData);
+    
+    if (isValid && prevFormDataStr !== currentFormDataStr) {
+      // Atualizar a referência para o próximo ciclo
+      prevFormDataRef.current = formData;
+      
+      // Chamar onComplete apenas se o formData mudou
       onComplete({ address: formData });
     }
   }, [formData, onComplete]);

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { 
   Box, 
   TextField, 
@@ -46,9 +46,22 @@ const PhoneInfo = ({ onComplete, initialValue, readOnly = false }) => {
   const [newPhone, setNewPhone] = useState('');
   const [newPhoneType, setNewPhoneType] = useState('CELL');
 
+  // Usar useRef para armazenar o valor anterior dos phones
+  const prevPhonesRef = useRef(phones);
+
   useEffect(() => {
     if (phones.length > 0) {
-      onComplete({ phones });
+      // Verificar se os phones realmente mudaram
+      const prevPhonesStr = JSON.stringify(prevPhonesRef.current);
+      const currentPhonesStr = JSON.stringify(phones);
+      
+      if (prevPhonesStr !== currentPhonesStr) {
+        // Atualizar a referência para o próximo ciclo
+        prevPhonesRef.current = phones;
+        
+        // Chamar onComplete apenas se os phones mudaram
+        onComplete({ phones });
+      }
     }
   }, [phones, onComplete]);
 

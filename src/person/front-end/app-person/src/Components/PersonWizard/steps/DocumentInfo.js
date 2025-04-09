@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { 
   Box, 
   TextField, 
@@ -59,10 +59,22 @@ const DocumentInfo = ({ onComplete, initialValue, readOnly = false }) => {
     id: Date.now().toString()
   });
 
+  // Usar useRef para armazenar o valor anterior dos documentos
+  const prevDocumentsRef = useRef(documents);
+
   useEffect(() => {
     // Validação básica - você pode adicionar mais regras conforme necessário
     const isValid = documents.length > 0;
-    if (isValid) {
+    
+    // Verificar se os documentos realmente mudaram
+    const prevDocumentsStr = JSON.stringify(prevDocumentsRef.current);
+    const currentDocumentsStr = JSON.stringify(documents);
+    
+    if (isValid && prevDocumentsStr !== currentDocumentsStr) {
+      // Atualizar a referência para o próximo ciclo
+      prevDocumentsRef.current = documents;
+      
+      // Chamar onComplete apenas se os documentos mudaram
       onComplete({ documents });
     }
   }, [documents, onComplete]);

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { 
   Box, 
   Stepper, 
@@ -33,11 +33,12 @@ const PersonWizardContent = ({ onComplete }) => {
   const { person, loading, error, updatePerson } = usePerson();
   const [formData, setFormData] = useState(null);
   const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
+  const [isUpdating, setIsUpdating] = useState(false);
 
   // Atualiza o formData quando os dados da pessoa são carregados
   useEffect(() => {
-    if (person) {
-      setFormData({
+    if (person && !formData) {
+      const initialFormData = {
         type: person.type || '',
         name: person.name || '',
         birthDate: person.birthDate || '',
@@ -55,14 +56,15 @@ const PersonWizardContent = ({ onComplete }) => {
         },
         phones: person.phones || [],
         status: person.status
-      });
+      };
+      setFormData(initialFormData);
     }
   }, [person]);
 
   // Verifica se o cadastro está em modo somente leitura
   const isReadOnly = formData?.status === StatusType.APPROVED || formData?.status === StatusType.PENDING;
 
-  const isStepComplete = (step) => {
+  const isStepComplete = useCallback((step) => {
     if (!formData) return false;
 
     switch (step) {
@@ -85,11 +87,11 @@ const PersonWizardContent = ({ onComplete }) => {
       default:
         return false;
     }
-  };
+  }, [formData]);
 
   // Atualiza o estado de conclusão dos passos
   useEffect(() => {
-    if (!formData) return;
+    if (!formData || isUpdating) return;
     
     const newCompleted = {};
     steps.forEach((_, index) => {
@@ -97,27 +99,55 @@ const PersonWizardContent = ({ onComplete }) => {
         newCompleted[index] = true;
       }
     });
-    setCompleted(newCompleted);
-  }, [formData]);
-
-  const handleNext = () => {
-    if (isStepComplete(activeStep)) {
-      const newCompleted = { ...completed };
-      newCompleted[activeStep] = true;
+    
+    // Só atualiza se houver mudança real no estado completed
+    const currentCompletedStr = JSON.stringify(completed);
+    const newCompletedStr = JSON.stringify(newCompleted);
+    if (currentCompletedStr !== newCompletedStr) {
       setCompleted(newCompleted);
-      setActiveStep((prevStep) => prevStep + 1);
     }
-  };
+  }, [formData, isUpdating, completed, isStepComplete]);
 
-  const handleBack = () => {
-    setActiveStep((prevStep) => prevStep - 1);
-  };
+  const handleStepDataChange = useCallback((stepData) => {
+    if (isUpdating) return;
+    
+    setIsUpdating(true);
+    setFormData(prev => {
+      if (!prev) return stepData;
+      const newData = {
+        ...prev,
+        ...stepData
+      };
+      // Só marca como não salvo se houver mudança real
+      const prevStr = JSON.stringify(prev);
+      const newStr = JSON.stringify(newData);
+      if (prevStr !== newStr) {
+        setHasUnsavedChanges(true);
+      }
+      return newData;
+    });
+    
+    // Reset isUpdating after a short delay
+    setTimeout(() => {
+      setIsUpdating(false);
+    }, 100);
+  }, [isUpdating]);
 
-  const handleStepClick = (step) => {
+  const handleNext = useCallback(() => {
+    if (isStepComplete(activeStep)) {
+      setActiveStep(prevStep => prevStep + 1);
+    }
+  }, [activeStep, isStepComplete]);
+
+  const handleBack = useCallback(() => {
+    setActiveStep(prevStep => prevStep - 1);
+  }, []);
+
+  const handleStepClick = useCallback((step) => {
     if (completed[step] || step < activeStep) {
       setActiveStep(step);
     }
-  };
+  }, [completed, activeStep]);
 
   const handleSave = async () => {
     if (!formData) return;
@@ -144,14 +174,6 @@ const PersonWizardContent = ({ onComplete }) => {
     } catch (error) {
       console.error('Erro ao salvar pessoa:', error);
     }
-  };
-
-  const handleStepDataChange = (stepData) => {
-    setFormData(prev => ({
-      ...prev,
-      ...stepData
-    }));
-    setHasUnsavedChanges(true);
   };
 
   if (loading) {
@@ -194,8 +216,13 @@ const PersonWizardContent = ({ onComplete }) => {
   return (
     <Container maxWidth="md">
       <Paper elevation={3} sx={{ p: 4, mt: 4 }}>
-        <Box sx={{ mb: 4 }}>
-          <Typography variant="h4" component="h1" gutterBottom>
+        <Box sx={{ 
+          mb: 4,
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center'
+        }}>
+          <Typography variant="h4" component="h1">
             Cadastro de Pessoa
           </Typography>
           {formData?.status && (
